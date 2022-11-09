@@ -9,8 +9,6 @@ import javafx.stage.Stage;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import static java.lang.Thread.sleep;
-
 
 public class App extends Application {
 
@@ -21,7 +19,7 @@ public class App extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws InterruptedException {
+    public void start(Stage primaryStage) {
         Group root = new Group();
         Button restart = new Button("Restart");
         Button switchPause = new Button("Pause");
@@ -41,13 +39,10 @@ public class App extends Application {
         grid.repaint();
 
         ScheduledThreadPoolExecutor threadPoolExecutor = new ScheduledThreadPoolExecutor(1);
-        threadPoolExecutor.scheduleWithFixedDelay(new Runnable() {
-            @Override
-            public void run() {
-                if(!isInPause) {
-                    grid.model.activation();
-                    grid.repaint();
-                }
+        threadPoolExecutor.scheduleAtFixedRate(() -> {
+            if(!isInPause) {
+                grid.model.activation();
+                grid.repaint();
             }
         }, 0, 50 , TimeUnit.MILLISECONDS);
     }
