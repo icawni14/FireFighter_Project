@@ -6,6 +6,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 import static java.lang.Thread.sleep;
 
 
@@ -31,21 +34,15 @@ public class App extends Application {
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
         grid.repaint();
-        new Thread(new Runnable() {
+
+        ScheduledThreadPoolExecutor threadPoolExecutor = new ScheduledThreadPoolExecutor(1);
+        threadPoolExecutor.scheduleWithFixedDelay(new Runnable() {
             @Override
             public void run() {
-                while(true){
-                    try {
-                        sleep(50);
-                        grid.model.activation();
-                        grid.repaint();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-
+                grid.model.activation();
+                grid.repaint();
             }
-        }).start();
+        }, 0, 50 , TimeUnit.MILLISECONDS);
     }
 }
 
