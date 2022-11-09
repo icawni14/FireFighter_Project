@@ -14,6 +14,8 @@ import static java.lang.Thread.sleep;
 
 public class App extends Application {
 
+    boolean isInPause = true;
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -22,6 +24,7 @@ public class App extends Application {
     public void start(Stage primaryStage) throws InterruptedException {
         Group root = new Group();
         Button restart = new Button("Restart");
+        Button switchPause = new Button("Pause");
         VBox buttons = new VBox();
         HBox total = new HBox();
         Grid grid = new Grid(1000,1000,20,20);
@@ -30,7 +33,9 @@ public class App extends Application {
         total.getChildren().add(buttons);
         total.getChildren().add(grid);
         buttons.getChildren().add(restart);
+        buttons.getChildren().add(switchPause);
         restart.setOnMouseClicked(grid::restart);
+        switchPause.setOnMouseClicked((value)->isInPause = !isInPause);
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
         grid.repaint();
@@ -39,8 +44,10 @@ public class App extends Application {
         threadPoolExecutor.scheduleWithFixedDelay(new Runnable() {
             @Override
             public void run() {
-                grid.model.activation();
-                grid.repaint();
+                if(!isInPause) {
+                    grid.model.activation();
+                    grid.repaint();
+                }
             }
         }, 0, 50 , TimeUnit.MILLISECONDS);
     }
