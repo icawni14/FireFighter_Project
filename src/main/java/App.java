@@ -25,7 +25,7 @@ public class App extends Application {
         Button switchPause = new Button("Pause");
         VBox buttons = new VBox();
         HBox total = new HBox();
-        Grid grid = new Grid(1000,1000,20,20);
+        Grid grid = new Grid(700,700,20,20);
 
         root.getChildren().add(total);
         total.getChildren().add(buttons);
