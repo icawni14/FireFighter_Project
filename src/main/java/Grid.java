@@ -17,12 +17,12 @@ public class Grid extends Canvas{
         setFocusTraversable(true);
         setOnMousePressed(this::mousePressed);
         model = new Model(this);
-        model.initialisation(3,8, 2); /// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        model.initialisation(3,8, 2, 3);
     }
 
     public void restart(MouseEvent mouseEvent){
         model = new Model(this);
-        model.initialisation(3,6, 2);
+        model.initialisation(3,6, 2, 3);
         getGraphicsContext2D().clearRect(0,0,width,height);
         repaint();
     }
@@ -62,11 +62,14 @@ public class Grid extends Canvas{
         getGraphicsContext2D().fillRect(row*height/rowCount, col*width/colCount, height/rowCount, width/colCount);
     }
     public void paintFFM(int row, int col){
-    }
-    public void paintMountain(int row, int col){
-        getGraphicsContext2D().setFill(Color.GRAY);
+        getGraphicsContext2D().setFill(Color.BLACK);
         getGraphicsContext2D().fillRect(row*height/rowCount, col*width/colCount, height/rowCount, width/colCount);
     }
+    /*public void paintMountain(int row, int col){
+        getGraphicsContext2D().setFill(Color.YELLOW);
+        getGraphicsContext2D().fillRect(row*height/rowCount, col*width/colCount, height/rowCount, width/colCount);
+    }*/
+
     public void paintRoad(int row, int column){
 
     }
